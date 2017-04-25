@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Simple wrapper for input triangle sides and creating Triangle object
+ * We use this factory s we want to separate triangle object from entering sides by users
  *
  * Created by ichebyki on 24.04.2017.
  */
@@ -132,7 +133,7 @@ public class TriangleFactory {
         // Create triangle object
         // If A, B, C contain some non-good values return null
         triangleLast = new Triangle(A, B, C);
-        if (triangleLast.getKind() == Triangle.TriKind.INVALID_SIDES) {
+        if (triangleLast.getKind() == Triangle.TriKind.INVALID) {
             errorLast = TriError.INVALID_SIDES_VALUES;
             return null;
         }

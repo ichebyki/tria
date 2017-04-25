@@ -4,6 +4,9 @@ package com.tri.app;
  * Actual triangle object class
  * It just saves three sides and kind of the triangle
  * While creating we verify sides values and calculate the kind
+ * Verification is simple,
+ * so, created Triangle object may be still invalid triangle
+ * which case is saved as INVALID kind
  *
  * Created by ichebyki on 22.04.2017.
  */
@@ -22,16 +25,16 @@ public class Triangle {
      * Then determines the kind of the triangle
      * The kind is a TriKind enum
      *
-     * @param a
-     * @param b
-     * @param c
+     * @param a - triangle side
+     * @param b - triangle side
+     * @param c - triangle side
      */
     public Triangle(double a, double b, double c) {
         this.a = a;
         this.b = b;
         this.c = c;
 
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public double getA() {
@@ -40,12 +43,12 @@ public class Triangle {
 
     public void setA(double a) {
         this.a = a;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public void setA(long a) {
         this.a = a;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public double getB() {
@@ -54,12 +57,12 @@ public class Triangle {
 
     public void setB(double b) {
         this.b = b;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public void setB(long b) {
         this.b = b;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public double getC() {
@@ -68,12 +71,12 @@ public class Triangle {
 
     public void setC(double c) {
         this.c = c;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     public void setC(long c) {
         this.c = c;
-        verifyThenKind();
+        verifyThenSetKind();
     }
 
     /**
@@ -83,7 +86,7 @@ public class Triangle {
         EQUILATERAL(1, "Triangle is equilateral"),
         ISOSCELES(2, "Triangle is isosceles"),
         SCALENE(3, "Triangle is scalene"),
-        INVALID_SIDES(4, "Bad sides values");
+        INVALID(4, "Bad sides values");
 
         private final int id;
         private final String msg;
@@ -109,6 +112,7 @@ public class Triangle {
      */
     public TriKind getKind() {
         if (kind==null) {
+            kind = TriKind.INVALID;
             if (a == b && b == c) {
                 kind = TriKind.EQUILATERAL;
             } else if (a == b || b == c || c == a) {
@@ -126,14 +130,16 @@ public class Triangle {
      *
      * @return boolean
      */
-    public boolean verify() {
+    private boolean verify() {
         // The triangle sides must be non-zero positive positive
         if (a <= 0.0 || b <= 0.0 || c <= 0.0) {
             return false;
         }
 
+        // This a very simple verification
         // We accept only finit values
         // i.e. not greater than Double.MAX_VALUE
+        // So, created Triangle object may be still invalid triangle
         if (a > Double.MAX_VALUE || b > Double.MAX_VALUE || c > Double.MAX_VALUE) {
             return false;
         }
@@ -162,14 +168,14 @@ public class Triangle {
     }
 
     /**
-     *  Just call verify() then getKind() in one place
+     *  Just call verify() then set kind in one place
      */
-    private void verifyThenKind() {
+    private void verifyThenSetKind() {
         if (verify()) {
             kind = getKind();
         }
         else {
-            kind = TriKind.INVALID_SIDES;
+            kind = TriKind.INVALID;
         }
     }
 
