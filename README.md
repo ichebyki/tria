@@ -2,6 +2,9 @@
 
 The project is a sample project for triangle task
 
+# Description
+
+
 The are 3 testsuite with 20 Junit tests
 
 The valid triangle may be only with the following conditions are true:
