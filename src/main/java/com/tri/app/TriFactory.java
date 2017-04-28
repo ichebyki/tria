@@ -4,9 +4,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Scanner;
@@ -110,64 +108,63 @@ public class TriFactory {
      * @return Triangle object
      */
     public Triangle createTriangle() {
-        double A, B, C;
+        errorLast = props.getProperty("NO_ERROR");
+        triangleLast = null;
 
-        try (Scanner input = new Scanner(in)) {
+        // Just prompt user for triangles sides
+        if (showPrompt) {
+            out.print("Please enter three triangle sides values\n"
+                    + "The values must have decimal(10) radix,\n"
+                    + "double format and are separated by spaces:\n");
+        }
 
-            errorLast = props.getProperty("NO_ERROR");
-            triangleLast = null;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+            double[] abc = new double[3];
+            int side_index = 0;
+            String line;
 
-            // Set locale, default is US
-            // Some locale defines ',' as decimal point
-            input.useLocale(locale);
+            while (side_index < 3) {
+                line = reader.readLine();
+                if (line == null) {
+                    errorLast = props.getProperty("INVALID_ARGS_COUNT");
+                    LOG.error(errorLast);
+                    return null;
+                }
 
-            // Just prompt user for triangles sides
-            if (showPrompt) {
-                out.print("Please enter three triangle sides values\n"
-                        + "The values must have decimal(10) radix,\n"
-                        + "double format and are separated by spaces:\n");
+                try (Scanner input = new Scanner(new ByteArrayInputStream(line.getBytes()))) {
+                    // Set locale, default is US
+                    // Some locale defines ',' as decimal point
+                    input.useLocale(locale);
+
+                    // Read sides values
+                    while (side_index < 3 && input.hasNext()) {
+                        if (input.hasNextDouble()) {
+                            abc[side_index++] = input.nextDouble();
+                        } else {
+                            errorLast = props.getProperty("INVALID_INPUT_FORMAT");
+                            LOG.error("Bad value for the side #" + side_index + ": " + errorLast);
+                            return null;
+                        }
+                    }
+
+                    // Verify that there are no more arguments
+                    if (input.hasNext()) {
+                        errorLast = props.getProperty("TOO_MANY_ARGUMENTS");
+                        LOG.warn(errorLast);
+                    }
+                }
             }
-
-            // Read a-side value
-            if (input.hasNextDouble()) {
-                A = input.nextDouble();
-            } else {
-                LOG.error("Bad value for the first side");
-                errorLast = props.getProperty("INVALID_INPUT_FORMAT");
-                return null;
-            }
-
-            // Read b-side value
-            if (input.hasNextDouble()) {
-                B = input.nextDouble();
-            } else {
-                LOG.error("Bad value for the second side");
-                errorLast = props.getProperty("INVALID_INPUT_FORMAT");
-                return null;
-            }
-
-            // Read c-side value
-            if (input.hasNextDouble()) {
-                C = input.nextDouble();
-            } else {
-                LOG.error("Bad value for the third side");
-                errorLast = props.getProperty("INVALID_INPUT_FORMAT");
-                return null;
-            }
-
-            // Verify that there are no more arguments
-            /*if (input.hasNext()) {
-                LOG.warn(props.getProperty("TOO_MANY_ARGUMENTS"));
-            }*/
 
             // Create triangle object
             // If A, B, C contain some non-good values exception will be thrown
-            triangleLast = new Triangle(A, B, C);
+            triangleLast = new Triangle(abc[0], abc[1], abc[2]);
             LOG.info("Triangle successfully created");
         } catch (Triangle.TriangleCreateException e) {
             errorLast = props.getProperty("INVALID_SIDES_VALUES");
             LOG.error("Can't create Triangle object. Please check sides values");
             return null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return triangleLast;

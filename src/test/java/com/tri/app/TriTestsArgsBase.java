@@ -13,7 +13,7 @@ import java.io.PrintStream;
  *
  * Created by ichebyki on 24.04.2017.
  */
-public class TriTestsBase {
+public class TriTestsArgsBase {
     private static final Logger LOG = Logger.getLogger("server." + new Object(){}.getClass().getEnclosingClass().getSimpleName());
     static {
         // Set up a simple configuration that logs on the console.

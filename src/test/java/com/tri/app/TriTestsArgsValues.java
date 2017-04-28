@@ -8,7 +8,7 @@ import org.junit.Test;
  *
  * Created by ichebyki on 24.04.2017.
  */
-public class TriTestsArgsValues extends TriTestsBase {
+public class TriTestsArgsValues extends TriTestsArgsBase {
 
     // Three sides are defined, and values are doubles
     @Test

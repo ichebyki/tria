@@ -51,5 +51,5 @@ The TriFactory is intended for:
   
   
 # Testsuite
-The are 3 testsuite with 20 Junit tests  
+The are 5 testsuites with 42 Junit tests
   
