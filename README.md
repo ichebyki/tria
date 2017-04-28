@@ -10,7 +10,7 @@ and return whether the triangle is equilateral, isosceles or scalene.
 # Platform used to develop
 The project is developed under Intellij IDEA 2017.1 community edition
 The project is a Gradle specific project
-Used Java platform JDK 1.8.0_102
+Used Java platform is JDK 1.8.0_102
 
 # How to build and run (Windows)
 1) clone Github repository git@github.com:ichebyki/tria.git to some dir
@@ -42,7 +42,7 @@ The other geometry restriction is:
      (a + b) > c && (b + c) > a && (a + c) > b
 
 The Triangle object may be created directly but we use TriFactory class object.
-The object is intended for:
+The TriFactory is intended for:
   1) divide user input from Triangle class
   2) possible fine tune restrictions adding in the future (for example creating special triangle only)
   3) setup Locale specific input (for example Russian decimal symbol is ',')
