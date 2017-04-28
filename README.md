@@ -38,6 +38,7 @@ with three restriction:
   - the values must be greater than zero
 
 The other geometry restriction is:
+
   if a, b, c are triangle sides values, the following must be true:
      (a + b) > c && (b + c) > a && (a + c) > b
 
