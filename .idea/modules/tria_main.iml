@@ -10,6 +10,5 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-to-slf4j:1.2.17" level="project" />
   </component>
 </module>

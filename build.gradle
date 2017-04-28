@@ -24,3 +24,14 @@ test {
         println "${desc.className} > ${desc.name} ${result.resultType}"
     }*/
 }
+
+jar {
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes 'Main-Class': 'com.tri.app.TriMain'
+    }
+}

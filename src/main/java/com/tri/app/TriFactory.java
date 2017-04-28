@@ -4,8 +4,9 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class TriFactory {
     private static final Logger LOG = Logger.getLogger("server." + new Object(){}.getClass().getEnclosingClass().getSimpleName());
 
     // Properties
-    static private String propsFileName = "TriFactory.properties";
+    static private String propsFileName = "com/tri/app/TriFactory.properties";
     static private Properties props;
 
     static {
@@ -155,9 +156,9 @@ public class TriFactory {
             }
 
             // Verify that there are no more arguments
-            if (input.hasNext()) {
+            /*if (input.hasNext()) {
                 LOG.warn(props.getProperty("TOO_MANY_ARGUMENTS"));
-            }
+            }*/
 
             // Create triangle object
             // If A, B, C contain some non-good values exception will be thrown
@@ -174,20 +175,13 @@ public class TriFactory {
 
 
     private static Properties parseProps(String propsFile) {
-        URL url = ClassLoader.getSystemResource(propsFile);
-        if (url == null) {
-            LOG.error("File not found: " + propsFileName);
-            return null;
-        }
         Properties props = new Properties();
-        try (FileInputStream in = new FileInputStream(url.getFile())) {
-            props.load(in);
-        } catch (FileNotFoundException e) {
-            LOG.error(e.getMessage());
-            return null;
+        ClassLoader cl = TriFactory.class.getClassLoader();
+
+        try (InputStream is = cl.getResourceAsStream(propsFile)) {
+            props.load(is);
         } catch (IOException e) {
-            LOG.error(e.getMessage());
-            return null;
+            e.printStackTrace();
         }
 
         return props;
