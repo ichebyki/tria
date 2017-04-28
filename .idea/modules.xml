@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/lib.iml" group="lib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tria.iml" filepath="$PROJECT_DIR$/.idea/modules/tria.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tria_main.iml" filepath="$PROJECT_DIR$/.idea/modules/tria_main.iml" group="tria" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tria_test.iml" filepath="$PROJECT_DIR$/.idea/modules/tria_test.iml" group="tria" />
