@@ -30,7 +30,7 @@ public class TriMain {
 
         // Create factory for Triangle object
         // the default Locale.US is used for double format
-        TriangleFactory factory = new TriangleFactory(input, output);
+        TriFactory factory = new TriFactory(input, output);
 
         // Create triangle object
         // Use input/output defined above
@@ -38,8 +38,8 @@ public class TriMain {
 
         // Verify triangle object
         if (triangle == null) {
-            output.println("ERROR: " + factory.getErrorLast().getMsg());
-            System.exit(factory.getErrorLast().getId());
+            output.println("ERROR: " + factory.getErrorLast());
+            System.exit(-1);
         }
 
         // Get and print triangle kind:

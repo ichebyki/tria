@@ -29,12 +29,15 @@ public class Triangle {
      * @param b - triangle side
      * @param c - triangle side
      */
-    public Triangle(double a, double b, double c) {
+    public Triangle(double a, double b, double c) throws TriangleCreateException {
         this.a = a;
         this.b = b;
         this.c = c;
 
         verifyThenSetKind();
+        if (this.kind == TriKind.UNDEFINED) {
+            throw new TriangleCreateException();
+        }
     }
 
     public double getA() {
@@ -83,10 +86,10 @@ public class Triangle {
      *  Enum for triangle kind
      */
     public enum TriKind {
+        UNDEFINED(0, "UNDEFINED"),
         EQUILATERAL(1, "Triangle is equilateral"),
         ISOSCELES(2, "Triangle is isosceles"),
-        SCALENE(3, "Triangle is scalene"),
-        INVALID(4, "Bad sides values");
+        SCALENE(3, "Triangle is scalene");
 
         private final int id;
         private final String msg;
@@ -112,7 +115,7 @@ public class Triangle {
      */
     public TriKind getKind() {
         if (kind==null) {
-            kind = TriKind.INVALID;
+            kind = TriKind.UNDEFINED;
             if (a == b && b == c) {
                 kind = TriKind.EQUILATERAL;
             } else if (a == b || b == c || c == a) {
@@ -175,8 +178,10 @@ public class Triangle {
             kind = getKind();
         }
         else {
-            kind = TriKind.INVALID;
+            kind = TriKind.UNDEFINED;
         }
     }
+
+    public class TriangleCreateException extends Exception {}
 
 }

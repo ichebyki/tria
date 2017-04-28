@@ -1,21 +1,36 @@
 package com.tri.app;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
 /**
+ * Base test template
+ *
  * Created by ichebyki on 24.04.2017.
  */
 public class TriTestsBase {
+    private static final Logger LOG = Logger.getLogger("server." + new Object(){}.getClass().getEnclosingClass().getSimpleName());
+    static {
+        // Set up a simple configuration that logs on the console.
+        BasicConfigurator.configure();
+
+        // Set logging off for tests
+        TriFactory.setLoggingLevel(Level.OFF);
+    }
 
     // The same as main method from TriMain class
     // The difference is just we use ByteArrayInputStream instead of System.in
     public String testTemplate(String args[]) {
+
         InputStream input;
         input = new ByteArrayInputStream(String.join(" ", args).getBytes());
         PrintStream output = System.out;
-        TriangleFactory factory = new TriangleFactory(input, output);
+        TriFactory factory = new TriFactory(input, output);
 
         // Hide prompt while testing
         factory.setShowPrompt(false);
@@ -26,7 +41,7 @@ public class TriTestsBase {
 
         // Verify triangle object
         if (triangle == null) {
-            return "ERROR: " + factory.getErrorLast().getMsg();
+            return "ERROR: " + factory.getErrorLast();
         }
 
         // Get and print triangle kind:
