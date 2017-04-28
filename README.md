@@ -8,9 +8,9 @@ It should take the lengths of the triangle's three sides as input,
 and return whether the triangle is equilateral, isosceles or scalene.
 
 # Platform used to develop
-The project is developed under Intellij IDEA 2017.1 community edition
-The project is a Gradle specific project
-Used Java platform is JDK 1.8.0_102
+The project is developed under Intellij IDEA 2017.1 community edition.
+The project is a Gradle specific project.
+Used Java platform is JDK 1.8.0_102.
 
 # How to build and run (Windows)
 1) clone Github repository git@github.com:ichebyki/tria.git to some dir
