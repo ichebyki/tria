@@ -34,8 +34,7 @@ public class Triangle {
         this.b = b;
         this.c = c;
 
-        verifyThenSetKind();
-        if (this.kind == TriKind.UNDEFINED) {
+        if (!verifyThenSetKind()) {
             throw new TriangleCreateException();
         }
     }
@@ -44,42 +43,72 @@ public class Triangle {
         return a;
     }
 
-    public void setA(double a) {
+    public boolean setA(double a) {
+        double saved = this.a;
         this.a = a;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.a = saved;
+            return false;
+        }
+        return true;
     }
 
-    public void setA(long a) {
+    public boolean setA(long a) {
+        double saved = this.a;
         this.a = a;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.a = saved;
+            return false;
+        }
+        return true;
     }
 
     public double getB() {
         return b;
     }
 
-    public void setB(double b) {
+    public boolean setB(double b) {
+        double saved = this.b;
         this.b = b;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.b = saved;
+            return false;
+        }
+        return true;
     }
 
-    public void setB(long b) {
+    public boolean setB(long b) {
+        double saved = this.b;
         this.b = b;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.b = saved;
+            return false;
+        }
+        return true;
     }
 
     public double getC() {
         return c;
     }
 
-    public void setC(double c) {
+    public boolean setC(double c) {
+        double saved = this.c;
         this.c = c;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.c = saved;
+            return false;
+        }
+        return true;
     }
 
-    public void setC(long c) {
+    public boolean setC(long c) {
+        double saved = this.c;
         this.c = c;
-        verifyThenSetKind();
+        if (!verifyThenSetKind()) {
+            this.c = saved;
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -113,8 +142,8 @@ public class Triangle {
      *
      * @return TriKind
      */
-    public TriKind getKind() {
-        if (kind==null) {
+    public TriKind getKind(boolean force) {
+        if (force || kind==null) {
             kind = TriKind.UNDEFINED;
             if (a == b && b == c) {
                 kind = TriKind.EQUILATERAL;
@@ -173,12 +202,14 @@ public class Triangle {
     /**
      *  Just call verify() then set kind in one place
      */
-    private void verifyThenSetKind() {
+    private boolean verifyThenSetKind() {
         if (verify()) {
-            kind = getKind();
+            kind = getKind(true);
+            return true;
         }
         else {
             kind = TriKind.UNDEFINED;
+            return false;
         }
     }
 

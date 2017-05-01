@@ -46,7 +46,7 @@ public class TriTestsArgsBase {
 
         // Get and print triangle kind:
         // equilateral, isosceles or scalene
-        Triangle.TriKind kind = triangle.getKind();
+        Triangle.TriKind kind = triangle.getKind(false);
         return "Triangle (" + triangle.getA() + ", " + triangle.getB() + ", " + triangle.getC() + ") " + " - " + kind.getMsg();
     }
 }

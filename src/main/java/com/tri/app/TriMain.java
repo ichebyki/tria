@@ -45,7 +45,7 @@ public class TriMain {
         // Get and print triangle kind:
         // equilateral, isosceles or scalene
         // one more kind is INVALID - the sides values are wrong
-        Triangle.TriKind kind = triangle.getKind();
+        Triangle.TriKind kind = triangle.getKind(false);
         output.print("Triangle (" + triangle.getA() + ", " + triangle.getB() + ", " + triangle.getC() + ") " + " - " + kind.getMsg());
     }
 
